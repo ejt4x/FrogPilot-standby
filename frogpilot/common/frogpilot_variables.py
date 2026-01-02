@@ -444,6 +444,7 @@ frogpilot_default_params: list[tuple[str, str | bytes, int, str]] = [
   ("StandardJerkSpeedDecrease", "100", 3, "100"),
   ("StandardPersonalityProfile", "1", 2, "0"),
   ("StandbyMode", "0", 1, "0"),
+  ("StandbyModeOnlyWhenDisengaged", "0", 1, "0"),
   ("StartAccel", "", 3, ""),
   ("StartAccelStock", "", 3, ""),
   ("StaticPedalsOnUI", "0", 1, "0"),
@@ -998,6 +999,7 @@ class FrogPilotVariables:
     toggle.screen_timeout = params.get_int("ScreenTimeout") if screen_management and tuning_level >= level["ScreenTimeout"] else default.get_int("ScreenTimeout")
     toggle.screen_timeout_onroad = params.get_int("ScreenTimeoutOnroad") if screen_management and tuning_level >= level["ScreenTimeoutOnroad"] else default.get_int("ScreenTimeoutOnroad")
     toggle.standby_mode = screen_management and (params.get_bool("StandbyMode") if tuning_level >= level["StandbyMode"] else default.get_bool("StandbyMode"))
+    toggle.standby_mode_only_when_disengaged = toggle.standby_mode and (params.get_bool("StandbyModeOnlyWhenDisengaged") if tuning_level >= level["StandbyModeOnlyWhenDisengaged"] else default.get_bool("StandbyModeOnlyWhenDisengaged"))
 
     toggle.sng_hack = toggle.openpilot_longitudinal and toggle.car_make == "toyota" and not toggle.has_pedal and not has_sng and (params.get_bool("SNGHack") if tuning_level >= level["SNGHack"] else default.get_bool("SNGHack"))
 

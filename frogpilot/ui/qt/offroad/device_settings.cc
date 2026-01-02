@@ -49,6 +49,7 @@ FrogPilotDevicePanel::FrogPilotDevicePanel(FrogPilotSettingsWindow *parent) : Fr
     {"ScreenTimeout", tr("Screen Timeout (Offroad)"), tr("<b>How long the screen stays on after being tapped while not driving.</b>"), ""},
     {"ScreenTimeoutOnroad", tr("Screen Timeout (Onroad)"), tr("<b>How long the screen stays on after being tapped while driving.</b>"), ""},
     {"StandbyMode", tr("Standby Mode"), tr("<b>Turn the screen off while driving and automatically wake it up for alerts or engagement state changes.</b>"), ""},
+    {"StandbyModeOnlyWhenDisengaged", tr("Only When Disengaged"), tr("<b>Only allow the screen to sleep when openpilot is disengaged.</b>"), ""},
 
     {"IgnoreMe", "Ignore Me", "This is simply used to fix the layout when the user opens the descriptions and the menu gets wonky. No idea why it happens, but I can't be asked to properly fix it so whatever. Sue me.", ""},
     {"IgnoreMe2", "Ignore Me", "This is simply used to fix the layout when the user opens the descriptions and the menu gets wonky. No idea why it happens, but I can't be asked to properly fix it so whatever. Sue me.", ""},
@@ -116,6 +117,11 @@ FrogPilotDevicePanel::FrogPilotDevicePanel(FrogPilotSettingsWindow *parent) : Fr
       deviceToggle = recorderToggle;
     } else if (param == "ScreenTimeout" || param == "ScreenTimeoutOnroad") {
       deviceToggle = new FrogPilotParamValueControl(param, title, desc, icon, 5, 60, tr(" seconds"), {}, 5);
+
+    } else if (param == "StandbyMode") {
+      std::vector<QString> standbyToggles{"StandbyModeOnlyWhenDisengaged"};
+      std::vector<QString> standbyToggleNames{tr("Only When Disengaged")};
+      deviceToggle = new FrogPilotButtonToggleControl(param, title, desc, icon, standbyToggles, standbyToggleNames);
 
     } else {
       deviceToggle = new ParamControl(param, title, desc, icon);
